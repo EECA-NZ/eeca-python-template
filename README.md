@@ -25,7 +25,7 @@ This repository serves as a template for Python projects at EECA, including pre-
    ```
    pre-commit install
    ```
-This installs the Git hooks specified in `.pre-commit-config.yaml` and ensures that code formatting and linting checks run before each commit.
+    This installs the Git hooks specified in `.pre-commit-config.yaml` and ensures that code formatting and linting checks run before each commit.
 1. Start developing your Python package in the `src/` directory.
 1. Write tests in the `tests/` directory.
 1. Running Tests Locally:
@@ -33,17 +33,46 @@ This installs the Git hooks specified in `.pre-commit-config.yaml` and ensures t
     python -m pytest
     ```
 1. Running Linters and Formatters Locally:
-* Black and Isort:
-    ```
-    python -m black src/ tests/
-    python -m isort src/ tests/
-    ```
-* Pylint:
-    ```
-    python -m pylint src/ tests/
-    ```
+    * Black and Isort:
+        ```
+        python -m black src/ tests/
+        python -m isort src/ tests/
+        ```
+    * Pylint:
+        ```
+        python -m pylint src/ tests/
+        ```
 1. Ensure Code Quality Before Pushing:
 Make sure all tests pass and code adheres to style guidelines before pushing changes.
+
+## Viewing Coverage Reports on GitHub Pages
+This template repository is configured to generate coverage reports using Coverage.py during the GitHub Actions workflows. The coverage reports are automatically pushed to the gh-pages branch. By enabling GitHub Pages in your repository, you can view these reports online.
+
+Steps to Enable GitHub Pages:
+
+1. Navigate to Repository Settings:
+    * Go to your repository on GitHub.
+    * Click on the Settings tab.
+
+1. Enable GitHub Pages:
+    * In the left sidebar, click on Pages (or scroll down to the GitHub Pages section).
+    * Under Source, select the `gh-pages` branch and set the folder to / (root).
+    * Click Save.
+
+1. Access the Coverage Report:
+    * Once GitHub Pages is enabled, your coverage report will be available at:
+    ```
+    https://[your-username].github.io/[your-repository-name]/htmlcov/
+    ```
+    Replace [your-username] and [your-repository-name] with your GitHub username and the repository name.
+
+Example:
+For this repository, the coverage report can be viewed at: https://eeca-nz.github.io/eeca-python-template/htmlcov/
+
+Notes:
+* It may take a few minutes for the GitHub Pages site to become active after enabling.
+* The coverage report will be updated each time the tests are run and coverage is generated in the GitHub Actions workflow.
+
 
 ## Features
 * Code Formatting: Enforces consistent code style with Black and Isort.
