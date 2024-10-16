@@ -1,7 +1,7 @@
 # EECA Python Template
 
-![Tests](https://github.com/EECA/eeca-python-template/actions/workflows/python-tests.yml/badge.svg)
-![Linting](https://github.com/EECA/eeca-python-template/actions/workflows/pylint.yml/badge.svg)
+![Tests](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/python-tests.yml/badge.svg)
+![Linting](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/pylint.yml/badge.svg)
 
 This repository serves as a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
 
