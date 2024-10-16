@@ -1,0 +1,5 @@
+pylint
+black
+isort
+coverage
+pre-commit
