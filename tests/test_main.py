@@ -2,8 +2,6 @@
 Module for testing the main module.
 """
 
-import numpy as numptydumpty
-
 
 def test_example():
     """
@@ -15,4 +13,4 @@ def test_example():
         AssertionError: If the test fails.
 
     """
-    assert numptydumpty.abs(1) + 1 == 2
+    assert 1 + 1 == 2
