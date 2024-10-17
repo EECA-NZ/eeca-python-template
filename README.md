@@ -9,7 +9,7 @@ This repository serves as a template for Python projects at EECA, including pre-
 
 1. Click on "Use this template" on the GitHub repository page.
 1. Create a new repository using this template.
-1. Update `setup.py` and `pyproject.toml` with your project's details.
+1. Update `pyproject.toml` and if necessary add a `setup.py` with your project's details.
 1. Create a virtual environment for your project:
    ```
    python -m venv .venv
@@ -82,6 +82,6 @@ Notes:
 * Continuous Integration: GitHub Actions workflows automate linting and testing on each push and pull request.
 
 ## Notes on Pre-commit:
-*  Configuration: The `.pre-commit-config.yaml` file contains the configuration for pre-commit hooks.
-* Automatic Formatting: When you attempt to commit changes, pre-commit will automatically run Black and Isort. If they make changes, you'll need to add the changes and commit again.
+* Configuration: The `.pre-commit-config.yaml` file contains the configuration for pre-commit hooks.
+* Automatic Formatting: When you attempt to commit changes, pre-commit will automatically run Black, Isort and Pylint. If they make changes, you'll need to add the changes and commit again.
 * Skipping Hooks: If necessary, you can skip pre-commit hooks by committing with the --no-verify flag, but this is not recommended.
