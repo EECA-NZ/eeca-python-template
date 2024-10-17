@@ -13,12 +13,12 @@ repos:
         language_version: default
         additional_dependencies: ["setuptools>=61.0"]
   - repo: https://github.com/pre-commit/mirrors-pylint
-    rev: v3.0.0a5
+    rev: v2.7.4
     hooks:
       - id: pylint
         name: pylint
         entry: pylint
-        language: python
+        language: system
         types: [python]
         args: ["src/", "tests/"]
         additional_dependencies: []
