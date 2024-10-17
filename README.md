@@ -9,7 +9,7 @@ This repository serves as a template for Python projects at EECA, including pre-
 
 1. Click on "Use this template" on the GitHub repository page.
 1. Create a new repository using this template.
-1. Update `setup.py` and `pyproject.toml` with your project's details.
+1. Update `pyproject.toml` and if necessary add a `setup.py` with your project's details.
 1. Create a virtual environment for your project:
    ```
    python -m venv .venv
