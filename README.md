@@ -82,6 +82,6 @@ Notes:
 * Continuous Integration: GitHub Actions workflows automate linting and testing on each push and pull request.
 
 ## Notes on Pre-commit:
-*  Configuration: The `.pre-commit-config.yaml` file contains the configuration for pre-commit hooks.
-* Automatic Formatting: When you attempt to commit changes, pre-commit will automatically run Black and Isort. If they make changes, you'll need to add the changes and commit again.
+* Configuration: The `.pre-commit-config.yaml` file contains the configuration for pre-commit hooks.
+* Automatic Formatting: When you attempt to commit changes, pre-commit will automatically run Black, Isort and Pylint. If they make changes, you'll need to add the changes and commit again.
 * Skipping Hooks: If necessary, you can skip pre-commit hooks by committing with the --no-verify flag, but this is not recommended.

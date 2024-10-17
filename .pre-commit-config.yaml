@@ -18,7 +18,7 @@ repos:
       - id: pylint
         name: pylint
         entry: pylint
-        language: system
+        language: python
         types: [python]
         args: ["src/", "tests/"]
         additional_dependencies: []
