@@ -2,6 +2,7 @@
 
 ![Tests](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/python-tests.yml/badge.svg)
 ![Linting](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/pylint.yml/badge.svg)
+[![DeepSource](https://deepsource.io/gh/EECA-NZ/eeca-python-template.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/EECA-NZ/eeca-python-template/?ref=repository-badge)
 
 This repository serves as a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
 
