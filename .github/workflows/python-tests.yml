@@ -8,6 +8,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
         python-version: ["3.11"]
@@ -40,7 +42,7 @@ jobs:
         git checkout -b gh-pages
         git add -f htmlcov
         git commit -m "Deploy coverage report"
-        git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
+        git push -f origin gh-pages
 
     - name: Generate coverage report in console
       run: coverage report
