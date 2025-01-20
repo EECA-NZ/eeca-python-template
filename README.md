@@ -63,7 +63,7 @@ Steps to Enable GitHub Pages:
     * Under Source, select the `gh-pages` branch and set the folder to / (root).
     * Click Save.
 
-1. Access the Coverage Report:
+1. Update the link at the top of the `README.md` to point at the coverage report for the new repository:
     * Once GitHub Pages is enabled, your coverage report will be available at:
     ```
     https://[your-username].github.io/[your-repository-name]/htmlcov/
@@ -71,9 +71,7 @@ Steps to Enable GitHub Pages:
     Replace [your-username] and [your-repository-name] with your GitHub username and the repository name.
 
 Example:
-For the template repository, the coverage report can be viewed at: https://eeca-nz.github.io/eeca-python-template/htmlcov/
-
-1. Update the link at the top of this README.md to point at the coverage report for the new repository.
+For the template repository, the coverage report can be viewed at: `https://eeca-nz.github.io/eeca-python-template/htmlcov/`.
 
 Notes:
 * It may take a few minutes for the GitHub Pages site to become active after enabling.
