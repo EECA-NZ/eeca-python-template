@@ -71,7 +71,9 @@ Steps to Enable GitHub Pages:
     Replace [your-username] and [your-repository-name] with your GitHub username and the repository name.
 
 Example:
-For this repository, the coverage report can be viewed at: https://eeca-nz.github.io/eeca-python-template/htmlcov/
+For the template repository, the coverage report can be viewed at: https://eeca-nz.github.io/eeca-python-template/htmlcov/
+
+1. Update the link at the top of this README.md to point at the coverage report for the new repository.
 
 Notes:
 * It may take a few minutes for the GitHub Pages site to become active after enabling.
