@@ -19,6 +19,11 @@ It is assumed that the devloper is working in Ubuntu (typically within `wsl` on 
    python -m venv .venv
    source ./.venv/bin/activate
    ```
+   Note that in powershell these commands would be:
+   ```
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
 1. Install the required dependencies:
 
    ```
