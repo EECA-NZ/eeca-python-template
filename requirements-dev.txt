@@ -6,3 +6,4 @@ isort==5.13.2
 coverage==7.6.4
 pre-commit==4.0.1
 setuptools==75.8.0
+pip-audit==2.7.3
