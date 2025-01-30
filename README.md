@@ -12,7 +12,7 @@ This repository serves as a template for Python projects at EECA, including pre-
 * Dependency Auditing: Uses pip-audit to detect known vulnerabilities in the Python dependencies.
 * Testing: Runs tests using Pytest and reports coverage with Coverage.py.
 * Pre-commit Hooks: Automates code formatting, linting, and dependency auditing before commits.
-* Continuous Integration: GitHub Actions workflows automate linting, testinga and dependency auditing on each push and pull request.
+* Continuous Integration: GitHub Actions workflows automate linting, testing, and dependency auditing on each push and pull request.
 * Dependabot for Automated Updates: A .github/dependabot.yml file keeps Python dependencies and GitHub Action versions updated.
 
 ## How to Use
