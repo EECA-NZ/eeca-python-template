@@ -22,3 +22,10 @@ repos:
         types: [python]
         args: ["--rcfile=.pylintrc"]
         additional_dependencies: []
+  - repo: local
+    hooks:
+      - id: pip-audit
+        name: pip-audit
+        entry: python scripts/pip_audit_hook.py
+        language: system
+        pass_filenames: false
