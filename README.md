@@ -6,6 +6,15 @@
 
 This repository serves as a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
 
+## Features
+* Code Formatting: Enforces consistent code style with Black and Isort.
+* Linting: Analyzes code quality using Pylint.
+* Dependency Auditing: Uses pip-audit to detect known vulnerabilities in the Python dependencies.
+* Testing: Runs tests using Pytest and reports coverage with Coverage.py.
+* Pre-commit Hooks: Automates code formatting, linting, and dependency auditing before commits.
+* Continuous Integration: GitHub Actions workflows automate linting, testing, and dependency auditing on each push and pull request.
+* Dependabot for Automated Updates: A .github/dependabot.yml file keeps Python dependencies and GitHub Action versions updated.
+
 ## How to Use
 
 It is assumed that the devloper is working in Ubuntu (typically within `wsl` on an EECA laptop).
@@ -14,16 +23,17 @@ It is assumed that the devloper is working in Ubuntu (typically within `wsl` on 
 1. Create a new repository using this template.
 1. Clone the repository: `git clone git@github.com:<gituser>/<new_repo_name>.git`
 1. Update `pyproject.toml` and if necessary add a `setup.py` with your project's details.
-1. Create a virtual environment for your project:
+1. Create and activate virtual environment for your project:
    ```
-   python -m venv .venv
-   source ./.venv/bin/activate
+   python -m venv .venv                       # one-off command to create the environment
+   source ./.venv/bin/activate                # to activate it; 'deactivate' turns it off
    ```
    Note that in powershell these commands would be:
    ```
-   python -m venv .venv
-   .\.venv\Scripts\activate
+   python -m venv .venv                       # one-off command to create the environment
+   .\.venv\Scripts\activate                   # to activate it; 'deactivate' turns it off
    ```
+   It is assumed that you have activated your virtual environment before running the commands below.
 1. Install the required dependencies:
 
    ```
@@ -50,6 +60,10 @@ It is assumed that the devloper is working in Ubuntu (typically within `wsl` on 
     * Pylint:
         ```
         python -m pylint src/ tests/
+        ```
+    * Pip-Audit:
+        ```
+        pip-audit
         ```
 1. Ensure Code Quality Before Pushing:
 Make sure all tests pass and code adheres to style guidelines before pushing changes.
@@ -82,15 +96,7 @@ Notes:
 * It may take a few minutes for the GitHub Pages site to become active after enabling.
 * The coverage report will be updated each time the tests are run and coverage is generated in the GitHub Actions workflow.
 
-
-## Features
-* Code Formatting: Enforces consistent code style with Black and Isort.
-* Linting: Analyzes code quality using Pylint.
-* Testing: Runs tests using Pytest and reports coverage with Coverage.py.
-* Pre-commit Hooks: Automates code formatting and linting before commits.
-* Continuous Integration: GitHub Actions workflows automate linting and testing on each push and pull request.
-
 ## Notes on Pre-commit:
 * Configuration: The `.pre-commit-config.yaml` file contains the configuration for pre-commit hooks.
-* Automatic Formatting: When you attempt to commit changes, pre-commit will automatically run Black, Isort and Pylint. If they make changes, you'll need to add the changes and commit again.
+* Automatic Formatting: When you attempt to commit changes, pre-commit will automatically run Black, Isort, Pylint, and Pip-Audit. If they make changes, you'll need to add the changes and commit again.
 * Skipping Hooks: If necessary, you can skip pre-commit hooks by committing with the --no-verify flag, but this is not recommended.
