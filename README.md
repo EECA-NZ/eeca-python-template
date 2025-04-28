@@ -83,7 +83,7 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
         pip-audit
         ```
 
-10.  **Ensure Code Quality Before Pushing:**
+10. **Ensure Code Quality Before Pushing:**
     *   Ensure all tests pass and code adheres to style guidelines.
     *   Fix any reported vulnerabilities found by `pip-audit`.
 
