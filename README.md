@@ -54,12 +54,12 @@ It is assumed that the devloper is working in Ubuntu (typically within `wsl` on 
 1. Running Linters and Formatters Locally:
     * Black and Isort:
         ```
-        python -m black src/ tests/
-        python -m isort src/ tests/
+        python -m black $(git ls-files '*.py')
+        python -m isort $(git ls-files '*.py')
         ```
     * Pylint:
         ```
-        python -m pylint src/ tests/
+        python -m pylint $(git ls-files '*.py')
         ```
     * Pip-Audit:
         ```
