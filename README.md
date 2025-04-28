@@ -136,7 +136,3 @@ Example: For this template repository:
     ```
 
     Use only when necessary, e.g., for urgent hotfixes.
-
-### Notes:
-* It may take a few minutes for the GitHub Pages site to become active after enabling.
-* The coverage report will be updated each time the tests are run and coverage is generated in the GitHub Actions workflow. This is triggered by any push to the repository.
