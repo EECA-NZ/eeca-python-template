@@ -7,96 +7,132 @@
 This repository serves as a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
 
 ## Features
-* Code Formatting: Enforces consistent code style with Black and Isort.
-* Linting: Analyzes code quality using Pylint.
-* Dependency Auditing: Uses pip-audit to detect known vulnerabilities in the Python dependencies.
-* Testing: Runs tests using Pytest and reports coverage with Coverage.py.
-* Pre-commit Hooks: Automates code formatting, linting, and dependency auditing before commits.
-* Continuous Integration: GitHub Actions workflows automate linting, testing, and dependency auditing on each push and pull request.
-* Dependabot for Automated Updates: A .github/dependabot.yml file keeps Python dependencies and GitHub Action versions updated.
+*   **Code Formatting:** Enforces consistent code style with Black and Isort.
+*   **Linting:** Analyzes code quality using Pylint.
+*   **Dependency Auditing:** Uses pip-audit to detect known vulnerabilities in the Python dependencies.
+*   **Testing:** Runs tests using Pytest and reports coverage with Coverage.py.
+*   **Pre-commit Hooks:** Automates code formatting, linting, and dependency auditing before commits and pushes.
+*   **Continuous Integration:** GitHub Actions workflows automate linting, testing, and dependency auditing on each push and pull request.
+*   **Dependabot for Automated Updates:** A `.github/dependabot.yml` file keeps Python dependencies and GitHub Action versions updated.
 
 ## How to Use
+It is assumed that the developer is working in Ubuntu (typically within `wsl` on an EECA laptop).
 
-It is assumed that the devloper is working in Ubuntu (typically within `wsl` on an EECA laptop).
+1.  **Use the Template:**
+    *   Click on "Use this template" on the GitHub repository page.
+    *   Create a new repository using this template.
 
-1. Click on "Use this template" on the GitHub repository page.
-1. Create a new repository using this template.
-1. Clone the repository: `git clone git@github.com:<gituser>/<new_repo_name>.git`
-1. Update `pyproject.toml` and if necessary add a `setup.py` with your project's details.
-1. Create and activate virtual environment for your project:
-   ```
-   python -m venv .venv                       # one-off command to create the environment
-   source ./.venv/bin/activate                # to activate it; 'deactivate' turns it off
-   ```
-   Note that in powershell these commands would be:
-   ```
-   python -m venv .venv                       # one-off command to create the environment
-   .\.venv\Scripts\activate                   # to activate it; 'deactivate' turns it off
-   ```
-   It is assumed that you have activated your virtual environment before running the commands below.
-1. Install the required dependencies:
-
-   ```
-   python -m pip install --upgrade pip
-   python -m pip install -r requirements-dev.txt
-   ```
-1. Install the pre-commit hooks:
-   ```
-   pre-commit install
-   ```
-    This installs the Git hooks specified in `.pre-commit-config.yaml` and ensures that code formatting and linting checks run before each commit.
-1. Start developing your Python package in the `src/` directory.
-1. Write tests in the `tests/` directory.
-1. Running Tests Locally:
+2.  **Clone the Repository:**
+    ```bash
+    git clone git@github.com:<gituser>/<new_repo_name>.git
     ```
+
+3.  **Update Project Metadata:**
+    *   Update `pyproject.toml` and, if necessary, add a `setup.py` with your project's details.
+
+4.  **Create and Activate a Virtual Environment:**
+    In Ubuntu or WSL:
+    ```bash
+    python -m venv .venv
+    source ./.venv/bin/activate
+    ```
+    In PowerShell (Windows):
+    ```bash
+    python -m venv .venv
+    .\.venv\Scripts\activate
+    ```
+    Ensure your virtual environment is activated before running the commands below.
+
+5.  **Install Required Dependencies:**
+    ```bash
+    python -m pip install --upgrade pip
+    python -m pip install -r requirements-dev.txt
+    ```
+
+6.  **Install Pre-commit Hooks:**
+    ```bash
+    pre-commit install
+    pre-commit install --hook-type pre-push
+    ```
+
+    This installs Git hooks specified in `.pre-commit-config.yaml`:
+    *   On **commit**, fast checks (`black`, `isort`, `pylint` on staged files) are run.
+    *   On **push**, thorough checks (`pylint` on the full codebase and `pip-audit`) are run.
+
+7.  **Start Developing:**
+    *   Develop your Python package in the `src/` directory.
+    *   Write tests in the `tests/` directory.
+
+8.  **Running Tests Locally:**
+    ```bash
     python -m pytest
     ```
-1. Running Linters and Formatters Locally:
-    * Black and Isort:
+
+9.  **Running Linters and Formatters Locally:**
+    *   Black and Isort:
+        ```bash
+        python -m black $(git ls-files "*.py")
+        python -m isort $(git ls-files "*.py")
         ```
-        python -m black $(git ls-files '*.py')
-        python -m isort $(git ls-files '*.py')
+    *   Full Codebase Pylint (as run pre-push):
+        ```bash
+        pylint --disable=R0801 $(git ls-files "*.py")
         ```
-    * Pylint:
-        ```
-        python -m pylint $(git ls-files '*.py')
-        ```
-    * Pip-Audit:
-        ```
+    *   Pip-Audit:
+        ```bash
         pip-audit
         ```
-1. Ensure Code Quality Before Pushing:
-Make sure all tests pass and code adheres to style guidelines before pushing changes.
+
+10. **Ensure Code Quality Before Pushing:**
+    *   Ensure all tests pass and code adheres to style guidelines.
+    *   Fix any reported vulnerabilities found by `pip-audit`.
+
 
 ## Viewing Coverage Reports on GitHub Pages
-This template repository is configured to generate coverage reports using Coverage.py during the GitHub Actions workflows. The coverage reports are automatically pushed to the gh-pages branch. By enabling GitHub Pages in your repository, you can view these reports online.
+This template repository is configured to generate coverage reports using Coverage.py during GitHub Actions workflows. The reports are automatically pushed to the `gh-pages` branch.
 
-Steps to Enable GitHub Pages:
+### Steps to Enable GitHub Pages:
 
-1. Navigate to Repository Settings:
-    * Go to your repository on GitHub.
-    * Click on the Settings tab.
+1.  **Navigate to Repository Settings:**
+    *   Go to your repository on GitHub.
+    *   Click the **Settings** tab.
 
-1. Enable GitHub Pages:
-    * In the left sidebar, click on Pages (or scroll down to the GitHub Pages section).
-    * Under Source, select the `gh-pages` branch and set the folder to / (root).
-    * Click Save.
+2.  **Enable GitHub Pages:**
+    *   In the sidebar, click **Pages** (or scroll down to the GitHub Pages section).
+    *   Under **Source**, select the `gh-pages` branch and the `/ (root)` folder.
+    *   Click **Save**.
 
-1. Update the link at the top of the `README.md` to point at the coverage report for the new repository:
-    * Once GitHub Pages is enabled, your coverage report will be available at:
-    ```
-    https://[your-username].github.io/[your-repository-name]/htmlcov/
-    ```
-    Replace [your-username] and [your-repository-name] with your GitHub username and the repository name.
+3.  **Update the Coverage Report Link:**
+    *   Your coverage report will be available at:
+        ```
+        https://[your-username].github.io/[your-repository-name]/htmlcov/
+        ```
+    *   Replace `[your-username]` and `[your-repository-name]` accordingly.
 
-Example:
-For the template repository, the coverage report can be viewed at: `https://eeca-nz.github.io/eeca-python-template/htmlcov/`.
+Example: For this template repository:
+`https://eeca-nz.github.io/eeca-python-template/htmlcov/`
 
-Notes:
-* It may take a few minutes for the GitHub Pages site to become active after enabling.
-* The coverage report will be updated each time the tests are run and coverage is generated in the GitHub Actions workflow.
+### Note that:
+
+*   It may take a few minutes for GitHub Pages to become active.
+*   The coverage report is updated each time tests are run in GitHub Actions.
 
 ## Notes on Pre-commit:
-* Configuration: The `.pre-commit-config.yaml` file contains the configuration for pre-commit hooks.
-* Automatic Formatting: When you attempt to commit changes, pre-commit will automatically run Black, Isort, Pylint, and Pip-Audit. If they make changes, you'll need to add the changes and commit again.
-* Skipping Hooks: If necessary, you can skip pre-commit hooks by committing with the --no-verify flag, but this is not recommended.
+*   **Configuration:** The `.pre-commit-config.yaml` file defines the pre-commit and pre-push hooks.
+*   **Hooks Behavior:**
+
+    *   Before running any checks, the hooks verify that the `.venv` virtual environment is activated. This ensures that the correct versions of tools and dependencies are used.
+    *   On commit:
+        *   Runs **Black**, **Isort**, and **Pylint (staged files only)**.
+    *   On push:
+        *   Runs **Pylint (entire codebase)** and **pip-audit** to catch broader issues and security vulnerabilities.
+
+*   **Automatic Formatting and Checking:**
+    If any formatter modifies files or a check fails, the commit will be blocked. After fixing issues or adding modified files, commit again.
+
+*   **Skipping Hooks (not recommended):**
+    ```bash
+    git commit --no-verify
+    ```
+
+    Use only when necessary, e.g., for urgent hotfixes.
