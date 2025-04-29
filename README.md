@@ -68,7 +68,14 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
     python -m pytest
     ```
 
-9.  **Running Linters and Formatters Locally:**
+9. **Run the tests locally with coverage:**
+    ```bash
+    python -m coverage run -m pytest
+    python -m coverage report
+    python -m coverage html
+    ```
+
+11. **Running Linters and Formatters Locally:**
     *   Black and Isort:
         ```bash
         python -m black $(git ls-files "*.py")
@@ -83,7 +90,7 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
         pip-audit
         ```
 
-10. **Ensure Code Quality Before Pushing:**
+12. **Ensure Code Quality Before Pushing:**
     *   Ensure all tests pass and code adheres to style guidelines.
     *   Fix any reported vulnerabilities found by `pip-audit`.
 
