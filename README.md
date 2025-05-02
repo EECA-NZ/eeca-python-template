@@ -57,7 +57,7 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
 
     This installs Git hooks specified in `.pre-commit-config.yaml`:
     *   On **commit**, fast checks (`black`, `isort`, `pylint` on staged files) are run.
-    *   On **push**, thorough checks (`pylint` on the full codebase and `pip-audit`) are run.
+    *   On **push**, thorough checks (`pip-audit`) are run.
 
 7.  **Start Developing:**
     *   Develop your Python package in the `src/` directory.
@@ -93,6 +93,7 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
 12. **Ensure Code Quality Before Pushing:**
     *   Ensure all tests pass and code adheres to style guidelines.
     *   Fix any reported vulnerabilities found by `pip-audit`.
+    *   Run `pre-commit run --all-files` to ensure all existing files conform to the hooks.
 
 
 ## Viewing Coverage Reports on GitHub Pages
