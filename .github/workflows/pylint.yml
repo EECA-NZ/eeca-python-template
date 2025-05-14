@@ -27,7 +27,7 @@ jobs:
 
       - name: Run linters
         run: |
-          black --check -diff src/ tests/
+          black --check --diff src/ tests/
           isort --profile black --check-only src/ tests/
           pylint --disable=R0801 $(git ls-files '*.py')
           yamllint .
