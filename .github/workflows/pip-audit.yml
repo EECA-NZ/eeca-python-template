@@ -1,4 +1,5 @@
-name: "pip-audit"
+---
+name: Pip Audit
 
 on: [push]
 
