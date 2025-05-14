@@ -1,0 +1,4 @@
+extends: default
+
+rules:
+  truthy: disable  # mistake Github Action 'on' as truthy statement
