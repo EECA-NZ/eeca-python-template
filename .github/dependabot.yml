@@ -12,14 +12,3 @@ updates:
     directory: /
     schedule:
       interval: weekly
-
-  - package-ecosystem: "pre-commit"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    target-branch: "main"
-    open-pull-requests-limit: 5
-    groups:
-      formatter:
-        patterns:
-          - "psf/black"
