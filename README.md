@@ -80,7 +80,7 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
         python -m black $(git ls-files "*.py")
         python -m isort $(git ls-files "*.py")
         ```
-    *   Full Codebase Pylint (as run pre-push):
+    *   Full Codebase Pylint (run manually if desired):
         ```bash
         pylint --disable=R0801 $(git ls-files "*.py")
         ```
@@ -132,7 +132,7 @@ Example: For this template repository:
     *   On commit:
         *   Runs **Black**, **Isort**, and **Pylint (staged files only)**.
     *   On push:
-        *   Runs **Pylint (entire codebase)** and **pip-audit** to catch broader issues and security vulnerabilities.
+        *   Runs **pip-audit** to check for security vulnerabilities before code is pushed.
 
 *   **Automatic Formatting and Checking:**
     If any formatter modifies files or a check fails, the commit will be blocked. After fixing issues or adding modified files, commit again.
