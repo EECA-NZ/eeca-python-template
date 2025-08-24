@@ -6,6 +6,15 @@ on:
     branches-ignore:
       - gh-pages
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   lint:
     name: Run Linting
@@ -58,19 +67,10 @@ jobs:
           coverage run -m pytest
           coverage html
 
-      - name: Deploy coverage report to GitHub Pages
-        if: success()
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git fetch origin
-          git worktree add gh-pages origin/gh-pages || \
-          git checkout --orphan gh-pages
-          cp -r htmlcov/* gh-pages/
-          cd gh-pages
-          git add .
-          git commit -m "Update coverage report"
-          git push -f origin HEAD:gh-pages
+      - name: Publish coverage to GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: htmlcov
 
       - name: Generate coverage report in console
         run: coverage report
@@ -94,6 +94,22 @@ jobs:
 
       - name: Run pip-audit
         run: pip-audit
+
+  pages:
+    name: Deploy coverage to GitHub Pages
+    if: >-
+      ${{ github.event_name != 'pull_request'
+          && contains(fromJSON('["main","dev"]'), github.ref_name) }}
+    needs: [test]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+
 
   deploy:
     name: Sample Deploy Step
