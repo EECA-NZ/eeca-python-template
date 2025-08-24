@@ -1,7 +1,7 @@
 # EECA Python Template
 
 ![ci-and-deploy](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/ci-and-deploy.yml/badge.svg)
-[Test Coverage Report](https://eeca-nz.github.io/eeca-python-template/htmlcov)
+[Test Coverage Report](https://eeca-nz.github.io/eeca-python-template)
 
 This repository serves as a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
 
