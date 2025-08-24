@@ -96,28 +96,22 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
 
 
 ## Viewing Coverage Reports on GitHub Pages
-This template repository is configured to generate coverage reports using Coverage.py during GitHub Actions workflows. The reports are automatically pushed to the `gh-pages` branch.
 
-### Steps to Enable GitHub Pages:
+This repository publishes coverage reports using Coverage.py during GitHub Actions.
+The HTML report is uploaded as a Pages artifact and deployed with the `actions/deploy-pages` action.
 
-1.  **Navigate to Repository Settings:**
-    *   Go to your repository on GitHub.
-    *   Click the **Settings** tab.
+### Enable GitHub Pages
 
-2.  **Enable GitHub Pages:**
-    *   In the sidebar, click **Pages** (or scroll down to the GitHub Pages section).
-    *   Under **Source**, select the `gh-pages` branch and the `/ (root)` folder.
-    *   Click **Save**.
+1. Go to **Settings -> Pages**.
+2. Under **Build and deploy**, set **Source** to **GitHub Actions**.
+3. Push to `main` or `dev` and wait for the workflow to finish. The deploy job will output the site URL.
 
-3.  **Update the Coverage Report Link:**
-    *   Your coverage report will be available at:
-        ```
-        https://[your-username].github.io/[your-repository-name]/htmlcov/
-        ```
-    *   Replace `[your-username]` and `[your-repository-name]` accordingly.
+### Coverage report URL
 
-Example: For this template repository:
-`https://eeca-nz.github.io/eeca-python-template/htmlcov/`
+Your coverage site will be available at:
+```
+https://eeca-nz.github.io/eeca-python-template/
+```
 
 ### Note that:
 
