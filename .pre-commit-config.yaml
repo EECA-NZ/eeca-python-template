@@ -67,7 +67,7 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-push]
-    
+
       - id: cz-check-any-branch
         name: commitizen check on any branch (pre-push)
         language: system
@@ -80,7 +80,8 @@ repos:
             do
               case "$remote_ref" in
                 refs/heads/*)
-                  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+                  if [ "$remote_sha" = \
+          "0000000000000000000000000000000000000000" ]; then
                     range="$local_sha"
                   else
                     range="$remote_sha..$local_sha"
