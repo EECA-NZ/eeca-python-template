@@ -133,7 +133,7 @@ https://eeca-nz.github.io/eeca-python-template/
     If any formatter modifies files or a check fails, the commit will be blocked. After fixing issues or adding modified files, commit again.
 
 *   **Conventional Commits:**
-    The pre-commit and pre-push hooks will enforce conventional commits. To find out more visit [www.conventionalcommits.org](https://www.conventionalcommits.org)
+    The pre-commit and pre-push hooks will enforce commit message conventions. To find out more visit [www.conventionalcommits.org](https://www.conventionalcommits.org)
 
 *   **Skipping Hooks (not recommended):**
     ```bash
