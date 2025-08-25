@@ -36,7 +36,7 @@ jobs:
           pip install pytest coverage
           pip install .
           pip install -r requirements-dev.txt
-      
+
       - name: Compute commit range
         id: range
         shell: bash
@@ -50,7 +50,7 @@ jobs:
           fi
 
           # If this is the first commit on a branch, 'before' can be all zeros
-          if [[ "$BASE" == "0000000000000000000000000000000000000000" || -z "$BASE" ]]; then
+          if [[ -z "$BASE" || "$BASE" =~ ^0{40}$ ]]; then
             # Fallback: just check the HEAD commit
             echo "range=$HEAD~1..$HEAD" >> "$GITHUB_OUTPUT"
           else
@@ -62,7 +62,7 @@ jobs:
         run: |
           echo "Checking range: ${{ steps.range.outputs.range }}"
           cz check --rev-range "${{ steps.range.outputs.range }}"
-      
+
   lint:
     name: Run Linting
     runs-on: ubuntu-latest
