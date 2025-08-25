@@ -50,7 +50,7 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
 
 6.  **Install Pre-commit Hooks:**
     ```bash
-    pre-commit install
+    pre-commit install --install-hooks
     pre-commit install --hook-type commit-msg
     pre-commit install --hook-type pre-push
     ```
