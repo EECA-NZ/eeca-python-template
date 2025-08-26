@@ -44,22 +44,26 @@ jobs:
         id: range
         shell: bash
         run: |
+          set -euo pipefail
+
+          # Pick base branch: PR base on PRs, default branch on pushes
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            BASE="${{ github.event.pull_request.base.sha }}"
-            HEAD="${{ github.event.pull_request.head.sha }}"
+            base_ref="${{ github.event.pull_request.base.ref }}"
           else
-            BASE="${{ github.event.before }}"
-            HEAD="${{ github.sha }}"
+            base_ref="${{ github.event.repository.default_branch }}"
           fi
 
-          # If this is the first commit on a branch, 'before' can be all zeros
-          if [[ -z "$BASE" || "$BASE" =~ ^0{40}$ ]]; then
-            # Fallback: just check the HEAD commit
-            echo "range=$HEAD~1..$HEAD" >> "$GITHUB_OUTPUT"
-          else
-            echo "range=$BASE..$HEAD" >> "$GITHUB_OUTPUT"
-          fi
-          echo "Using range: $(cat $GITHUB_OUTPUT)"
+          head_sha="${{ github.sha }}"
+
+          # Ensure we have the base branch locally
+          git fetch --no-tags --prune --depth=0 origin \
+            "+refs/heads/$base_ref:refs/remotes/origin/$base_ref"
+          # Fork point between base and HEAD; fall back to repo root if needed
+          fp="$(git merge-base "origin/$base_ref" "$head_sha" \
+              || git rev-list --max-parents=0 "$head_sha" | tail -n1)"
+
+          echo "range=$fp..$head_sha" >> "$GITHUB_OUTPUT"
+          echo "Using range: $fp..$head_sha"
 
       - name: Run Commitizen check
         run: |
