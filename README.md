@@ -50,7 +50,8 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
 
 6.  **Install Pre-commit Hooks:**
     ```bash
-    pre-commit install
+    pre-commit install --install-hooks
+    pre-commit install --hook-type commit-msg
     pre-commit install --hook-type pre-push
     ```
 
@@ -130,6 +131,60 @@ https://eeca-nz.github.io/eeca-python-template/
 
 *   **Automatic Formatting and Checking:**
     If any formatter modifies files or a check fails, the commit will be blocked. After fixing issues or adding modified files, commit again.
+
+*   **Conventional Commits:**
+    The pre-commit hooks will enforce commit message conventions. To find out more visit [www.conventionalcommits.org](https://www.conventionalcommits.org)
+
+    Common commit types:
+    - `feat`: new feature
+    - `fix`: bug fix
+    - `docs`: documentation only changes
+    - `style`: formatting only (no code changes)
+    - `refactor`: code change that neither fixes a bug nor adds a feature
+    - `test`: adding or fixing tests
+    - `chore`: maintenance tasks (build, deps, configs, etc.)
+
+    Example:  
+    - `feat(auth): add salesforce login`  
+    - `fix(python): correct null values in code`  
+
+## Fixing Old Commits (Conventional Commits)
+If your commit messages don’t follow the convention and checks fail, you can rewrite them using interactive rebase.
+
+1.Configure VS Code as your Git editor *(Skip this if you already use another editor)*
+```bash
+git config --global core.editor "code -w"
+```
+2.Abort any in-progress rebase (just in case)
+```bash
+git rebase --abort || true
+```
+3.Switch to your feature branch and update
+```bash
+git switch your-feature
+git fetch origin
+```
+4.Pick the correct base branch (choose ONE)
+```bash
+BASE=origin/main   # if your PR targets main
+# BASE=origin/dev  # if your PR targets dev
+# BASE=origin/test  # if your PR targets test
+```
+5.Find the fork point (where your branch split from base)
+```bash
+FORK_POINT=$(git merge-base "$BASE" HEAD)
+```
+6.Start interactive rebase
+```bash
+git rebase -i "$FORK_POINT"
+# change 'pick' to 'reword' for the commits to fix
+# enter proper Conventional Commit messages when 
+```
+7.Push rewritten history safely
+```bash
+git push --force-with-lease
+```
+Note: This rewrites commit history. Only do this on your own feature branches, never on shared `main`/`dev`.
 
 *   **Skipping Hooks (not recommended):**
     ```bash

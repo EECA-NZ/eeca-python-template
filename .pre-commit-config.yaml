@@ -67,3 +67,10 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-push]
+
+      - id: commitizen-local
+        name: commitizen (venv)
+        entry: cz check --commit-msg-file
+        language: system
+        pass_filenames: true
+        stages: [commit-msg]
