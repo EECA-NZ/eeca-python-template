@@ -1,0 +1,44 @@
+---
+name: Release (semantic-release)
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          npx -y
+          -p semantic-release
+          -p @semantic-release/commit-analyzer
+          -p @semantic-release/release-notes-generator
+          -p @semantic-release/github
+          -p conventional-changelog-conventionalcommits
+          semantic-release
+      - name: Generate CHANGELOG.md (Conventional Commits)
+        run: |
+          npx -y conventional-changelog-cli \
+            -p conventionalcommits \
+            -r 0 \
+            -o CHANGELOG.md
+
+      - name: Upload changelog artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: CHANGELOG.md
