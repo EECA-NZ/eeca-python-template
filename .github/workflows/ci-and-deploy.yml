@@ -49,18 +49,23 @@ jobs:
           # Pick base branch: PR base on PRs, default branch on pushes
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             base_ref="${{ github.event.pull_request.base.ref }}"
+            head_sha="${{ github.event.pull_request.head.sha }}"
           else
             base_ref="${{ github.event.repository.default_branch }}"
+            head_sha="${{ github.sha }}"
           fi
 
-          head_sha="${{ github.sha }}"
+          # Ensure the base branch exists locally (full history)
+          refspec="+refs/heads/$base_ref:refs/remotes/origin/$base_ref"
+          git fetch --no-tags --prune origin "$refspec"
 
-          # Ensure we have the base branch locally
-          git fetch --no-tags --prune --depth=0 origin \
-            "+refs/heads/$base_ref:refs/remotes/origin/$base_ref"
-          # Fork point between base and HEAD; fall back to repo root if needed
-          fp="$(git merge-base "origin/$base_ref" "$head_sha" \
-              || git rev-list --max-parents=0 "$head_sha" | tail -n1)"
+          # If the checkout was shallow, unshallow it
+          if git rev-parse --is-shallow-repository | grep -q true; then
+            git fetch --unshallow
+          fi
+
+          fp="$(git merge-base "origin/$base_ref" "$head_sha" || \
+          git rev-list --max-parents=0 "$head_sha" | tail -n1)"
 
           echo "range=$fp..$head_sha" >> "$GITHUB_OUTPUT"
           echo "Using range: $fp..$head_sha"
