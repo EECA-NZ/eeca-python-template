@@ -37,42 +37,33 @@ jobs:
           pip install .
           pip install -r requirements-dev.txt
 
-      - name: Compute commit range
+      - name: Compute feature commit range
         id: range
         shell: bash
         run: |
           set -euo pipefail
 
-          if [[ "${{ github.event_name }}" != "push" ]]; then
-            echo "Not a push event; skipping."
-            exit 0
-          fi
-
           head_sha="${{ github.sha }}"
-          base_sha="${{ github.event.before }}"
+          base_branch="main"   #change if default branch is different
 
-          if [[ "$base_sha" =~ ^0+$ ]]; then
-          base_sha="$(git rev-list --max-parents=0 "$head_sha" | tail -n1)"
-          else
-            # Ensure the 'before' commit exists locally
-            if ! git cat-file -e "$base_sha^{commit}" 2>/dev/null; then
-            # Fetch just that commit (and its objects) efficiently
-            git fetch --no-tags --prune --depth=100 \
-            origin "$base_sha" || git fetch --no-tags --prune origin --depth=0
-            fi
-          fi
+          git fetch origin "$base_branch"
+          fork_point="$(git merge-base --fork-point\
+          "origin/${base_branch}" "$head_sha" \
+          || git merge-base "origin/${base_branch}" "$head_sha")"
 
-          echo "range=$base_sha..$head_sha" >> "$GITHUB_OUTPUT"
-          echo "Using range: $base_sha..$head_sha"
+          range="${fork_point}..${head_sha}"
+          echo "range=$range" >> "$GITHUB_OUTPUT"
+          echo "Using feature range: $range"
 
       - name: Run Commitizen check
         if: ${{ steps.range.outputs.range != '' }}
         run: |
           range="${{ steps.range.outputs.range }}"
           if [ "$(git rev-list --count "$range")" -eq 0 ]; then
-            echo "Range empty; checking last commit only"
+            echo "No commits since fork point; checking last commit only"
             cz check --message "$(git log -1 --pretty=%B "${{ github.sha }}")"
           else
+            echo "Checking commits in range: $range"
             cz check --rev-range "$range"
           fi
 

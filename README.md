@@ -148,42 +148,43 @@ https://eeca-nz.github.io/eeca-python-template/
     - `feat(auth): add salesforce login`  
     - `fix(python): correct null values in code`  
 
-### Fixing Old Commits (Conventional Commits)
-    If your commit messages don’t follow the convention and checks fail, you can rewrite them using **interactive rebase**:
-    First, configure VS Code as your Git editor (or skip if you already use a different editor):
+## Fixing Old Commits (Conventional Commits)
+If your commit messages don’t follow the convention and checks fail, you can rewrite them using interactive rebase.
 
-    ```bash
-    git config --global core.editor "code -w"
-    ```
-    
-    ```bash
-    # 1) Abort any in-progress rebase (just in case)
-    git rebase --abort || true
-
-    # 2) Switch to your feature branch and update
-    git switch your-feature
-    git fetch origin
-
-    # 3) Pick the correct base branch (choose ONE)
-    BASE=origin/main   # if your PR targets main
-    # BASE=origin/dev  # if your PR targets dev
-    # BASE=origin/test  # if your PR targets test
-
-    # 4) Find the fork point (where your branch split from base)
-    FORK_POINT=$(git merge-base "$BASE" HEAD)
-
-    # (*optional*) sanity check – view the commits you’ll edit
-    git log --oneline --graph --decorate $FORK_POINT..HEAD
-
-    # 5) Start interactive rebase
-    git rebase -i "$FORK_POINT"
-    # -> change 'pick' to 'reword' for the commits to fix
-    # -> enter proper Conventional Commit messages when prompted
-
-    # 6) Push rewritten history safely
-    git push --force-with-lease
-    ```
-    Note: This rewrites commit history. Only do this on your own feature branches, never on shared `main`/`dev`.
+1.Configure VS Code as your Git editor *(Skip this if you already use another editor)*
+```bash
+git config --global core.editor "code -w"
+```
+2.Abort any in-progress rebase (just in case)
+```bash
+git rebase --abort || true
+```
+3.Switch to your feature branch and update
+```bash
+git switch your-feature
+git fetch origin
+```
+4.Pick the correct base branch (choose ONE)
+```bash
+BASE=origin/main   # if your PR targets main
+# BASE=origin/dev  # if your PR targets dev
+# BASE=origin/test  # if your PR targets test
+```
+5.Find the fork point (where your branch split from base)
+```bash
+FORK_POINT=$(git merge-base "$BASE" HEAD)
+```
+6.Start interactive rebase
+```bash
+git rebase -i "$FORK_POINT"
+# change 'pick' to 'reword' for the commits to fix
+# enter proper Conventional Commit messages when 
+```
+7.Push rewritten history safely
+```bash
+git push --force-with-lease
+```
+Note: This rewrites commit history. Only do this on your own feature branches, never on shared `main`/`dev`.
 
 *   **Skipping Hooks (not recommended):**
     ```bash
