@@ -3,6 +3,7 @@ name: Release (semantic-release)
 on:
   push:
     branches:
+    #change the branch to pre-prod
       - 'main'
   workflow_dispatch:
 
