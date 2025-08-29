@@ -148,6 +148,14 @@ https://eeca-nz.github.io/eeca-python-template/
     - `feat(auth): add salesforce login`  
     - `fix(python): correct null values in code`  
 
+*   **Semantic Versioning:**
+    This project follows Semantic Versioning (SemVer). Versions are expressed as:`MAJOR.MINOR.PATCH`.
+    When releases are created, the commit history is used to generate release notes and determine the next version automatically.
+    - `feat:` → MINOR bump (1.2.0 → 1.3.0)
+    - `fix:` → PATCH bump (1.2.0 → 1.2.1)
+    - `feat!:` or `BREAKING CHANGE:` → MAJOR bump (1.2.0 → 2.0.0)
+    - Other types → no release unless paired with `BREAKING CHANGE:`
+
 ## Fixing Old Commits (Conventional Commits)
 If your commit messages don’t follow the convention and checks fail, you can rewrite them using interactive rebase.
 
