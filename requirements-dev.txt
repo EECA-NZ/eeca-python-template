@@ -9,3 +9,4 @@ setuptools==80.*
 pip-audit==2.*
 yamllint==1.*
 commitizen==3.*
+filelock>=3.20.1
