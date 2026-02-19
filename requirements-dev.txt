@@ -5,7 +5,7 @@ black==25.*
 isort==6.*
 coverage==7.*
 pre-commit==4.*
-setuptools==80.*
+setuptools==82.*
 pip-audit==2.*
 yamllint==1.*
 commitizen==3.*
