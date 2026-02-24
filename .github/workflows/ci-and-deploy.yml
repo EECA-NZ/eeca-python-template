@@ -5,6 +5,11 @@ on:
   push:
     branches-ignore:
       - gh-pages
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -28,7 +33,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install package and other dependencies
         run: |
@@ -78,7 +83,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -91,7 +96,8 @@ jobs:
         run: |
           black --check --diff src/ tests/
           isort --profile black --check-only src/ tests/
-          pylint --disable=R0801 $(git ls-files '*.py')
+          pylint --disable=R0801 $(git ls-files '*.py') | tee pylint-report.txt
+          grep -q "rated at 10.00/10" pylint-report.txt
           yamllint .
 
   test:
@@ -105,7 +111,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install package and other dependencies
         run: |
@@ -138,7 +144,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |

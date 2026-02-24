@@ -57,7 +57,7 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
 
     This installs Git hooks specified in `.pre-commit-config.yaml`:
     *   On **commit**, fast checks (`black`, `isort`, `pylint` on staged files) are run.
-    *   On **push**, thorough checks (`pip-audit`) are run.
+    *   On **push**, `pip-audit` runs against `requirements.txt` and `requirements-dev.txt`.
 
 7.  **Start Developing:**
     *   Develop your Python package in the `src/` directory.
@@ -87,13 +87,42 @@ It is assumed that the developer is working in Ubuntu (typically within `wsl` on
         ```
     *   Pip-Audit:
         ```bash
-        pip-audit
+        pip-audit -r requirements.txt
+        pip-audit -r requirements-dev.txt
         ```
 
 12. **Ensure Code Quality Before Pushing:**
     *   Ensure all tests pass and code adheres to style guidelines.
     *   Fix any reported vulnerabilities found by `pip-audit`.
     *   Run `pre-commit run --all-files` to ensure all existing files conform to the hooks.
+
+## Using Codex in a Derived Repo
+
+After creating a new repository from this template, add an `AGENTS.md` file at the repository root so Codex follows your project rules.
+
+Example `AGENTS.md`:
+```md
+# AGENTS.md
+
+## Code Quality Workflow
+Always use the virtual environment via `.venv/bin/activate`.
+
+Before finalizing any code change:
+1. Run `isort .`
+2. Run `black .`
+3. Run `pylint .`
+4. Run `pytest`
+5. Fix issues introduced by the change.
+6. Re-run checks to confirm clean output.
+```
+
+Recommended workflow with Codex:
+
+1. Create a feature branch and describe the task clearly.
+2. Ask Codex to implement the change and run the quality workflow.
+3. Ask Codex for a review before merge (`Please review this change`).
+4. Ensure CI passes on the pull request (Python 3.12).
+5. Merge after approvals.
 
 
 ## Viewing Coverage Reports on GitHub Pages
@@ -127,7 +156,7 @@ https://eeca-nz.github.io/eeca-python-template/
     *   On commit:
         *   Runs **Black**, **Isort**, and **Pylint (staged files only)**.
     *   On push:
-        *   Runs **pip-audit** to check for security vulnerabilities before code is pushed.
+        *   Runs **pip-audit** against `requirements.txt` and `requirements-dev.txt`.
 
 *   **Automatic Formatting and Checking:**
     If any formatter modifies files or a check fails, the commit will be blocked. After fixing issues or adding modified files, commit again.

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-This script is a pre-commit hook that ensures the user is in a venv,
-updates dev requirements, and then runs pip-audit to check for known vulnerabilities.
+Run pip-audit from pinned requirement files for deterministic pre-push checks.
 """
 
 import os
@@ -12,26 +11,22 @@ import sys
 def main():
     """
     Main entry point for pip-audit hook.
-    Checks if we're in a venv, installs dev requirements, and runs pip-audit.
+    Checks if we're in a venv and audits pinned dependencies.
     """
-    # 1) Check if we are inside a virtual environment
+    # 1) Check if we are inside a virtual environment.
     if "VIRTUAL_ENV" not in os.environ:
-        print("ERROR: You must activate a local .venv before committing.")
+        print("ERROR: You must activate a local .venv before pushing.")
         sys.exit(1)
-    # 2) Install/Update requirements-dev.txt
+
+    # 2) Run pip-audit against requirements files (no environment mutation).
     try:
-        subprocess.check_call(["pip", "install", "-r", "requirements-dev.txt"])
-    except subprocess.CalledProcessError as e:
-        print("Failed to install requirements-dev.txt.")
-        sys.exit(e.returncode)
-    # 3) Run pip-audit on the active environment
-    try:
-        subprocess.check_call(["pip-audit"])
+        subprocess.check_call(["pip-audit", "-r", "requirements.txt"])
+        subprocess.check_call(["pip-audit", "-r", "requirements-dev.txt"])
     except subprocess.CalledProcessError as e:
         print("pip-audit found vulnerabilities or failed.")
         sys.exit(e.returncode)
 
-    print("Environment updated; no known vulnerabilities found.")
+    print("No known vulnerabilities found in requirement files.")
     sys.exit(0)
 
 

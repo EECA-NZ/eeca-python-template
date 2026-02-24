@@ -1,16 +1,8 @@
-"""
-Module for testing the main module.
-"""
+"""Smoke tests for the template package."""
+
+import python_package
 
 
-def test_example():
-    """
-    Example test function.
-
-    This function tests that 1 + 1 equals 2.
-
-    Raises:
-        AssertionError: If the test fails.
-
-    """
-    assert 1 + 1 == 2
+def test_package_imports():
+    """The template package should be importable."""
+    assert python_package.__version__ == "0.1.0"
