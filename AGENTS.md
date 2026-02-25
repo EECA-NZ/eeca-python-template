@@ -8,7 +8,7 @@ Before finalizing any code change:
 2. Run `black .`
 3. Run `pylint .`
 4. Run `pytest`
-5. Fix issues introduced by the change.
+5. Fix issues introduced by the change. Do NOT fix pylint issues by disabling checks UNLESS this is justified by code style considerations.
 6. Re-run checks to confirm clean output.
 
 ## Strict Fail Conditions

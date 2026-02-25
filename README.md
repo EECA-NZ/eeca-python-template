@@ -118,9 +118,9 @@ Before finalizing any code change:
 
 Recommended workflow with Codex:
 
-1. Create a feature branch and describe the task clearly.
-2. Ask Codex to implement the change and run the quality workflow.
-3. Ask Codex for a review before merge (`Please review this change`).
+1. Create a feature branch, enter a Codex session, and describe the task clearly.
+2. After discussing what would be involved, ask Codex to implement the change and run the quality workflow.
+3. Set up a standard PR to merge to main.
 4. Ensure CI passes on the pull request (Python 3.12).
 5. Merge after approvals.
 
@@ -173,9 +173,9 @@ https://eeca-nz.github.io/eeca-python-template/
     - `test`: adding or fixing tests
     - `chore`: maintenance tasks (build, deps, configs, etc.)
 
-    Example:  
-    - `feat(auth): add salesforce login`  
-    - `fix(python): correct null values in code`  
+    Example:
+    - `feat(auth): add salesforce login`
+    - `fix(python): correct null values in code`
 
 *   **Semantic Versioning:**
     This project follows Semantic Versioning (SemVer). Versions are expressed as:`MAJOR.MINOR.PATCH`.
@@ -215,7 +215,7 @@ FORK_POINT=$(git merge-base "$BASE" HEAD)
 ```bash
 git rebase -i "$FORK_POINT"
 # change 'pick' to 'reword' for the commits to fix
-# enter proper Conventional Commit messages when 
+# enter proper Conventional Commit messages when
 ```
 7.Push rewritten history safely
 ```bash
