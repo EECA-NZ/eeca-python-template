@@ -3,6 +3,8 @@
 ## Code Quality Workflow
 Always use the virtual environment via `.venv/bin/activate` which has the development tools installed.
 
+Known environment issue: `black` can hang when run inside the Codex sandbox in this repository. Run `black .` and `black --check .` outside the sandbox with the `.venv` active.
+
 Before finalizing any code change:
 1. Run `isort .`
 2. Run `black .`

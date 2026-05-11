@@ -1,7 +1,7 @@
 -r requirements.txt
-pytest==8.*
+pytest==9.*
 pylint==3.*
-black==25.*
+black==26.*
 isort==6.*
 coverage==7.*
 pre-commit==4.*
