@@ -1,202 +1,48 @@
 # EECA Python Template
 
-![ci-and-deploy](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/ci-and-deploy.yml/badge.svg)
-[Test Coverage Report](https://eeca-nz.github.io/eeca-python-template)
+[![CI](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/ci-and-deploy.yml/badge.svg)](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/ci-and-deploy.yml)
+[Coverage report](https://eeca-nz.github.io/eeca-python-template/)
 
-This repository serves as a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
+A small, modern starting point for EECA Python packages: PEP 621 metadata, a
+`src/` layout, uv-locked dependencies, quality checks, dependency auditing,
+conventional-commit validation, and coverage publishing from `main`.
 
-## Features
-*   **Code Formatting:** Enforces consistent code style with Black and Isort.
-*   **Linting:** Analyzes code quality using Pylint.
-*   **Dependency Auditing:** Uses pip-audit to detect known vulnerabilities in the Python dependencies.
-*   **Testing:** Runs tests using Pytest and reports coverage with Coverage.py.
-*   **Pre-commit Hooks:** Automates code formatting, linting, and dependency auditing before commits and pushes.
-*   **Continuous Integration:** GitHub Actions workflows automate linting, testing, and dependency auditing on each push and pull request.
-*   **Dependabot for Automated Updates:** A `.github/dependabot.yml` file keeps Python dependencies and GitHub Action versions updated.
+## Before using this template
 
-## How to Use
-It is assumed that the developer is working in Ubuntu (typically within `wsl` on an EECA laptop).
+Replace the placeholder distribution/package names, description, version,
+repository URL, dependencies, and test. The example test deliberately only
+demonstrates pytest discovery; replace it when the project has behaviour to
+test. It also means the initial coverage report only describes the test file;
+configure a package-only coverage source and threshold once real code exists.
 
-1.  **Use the Template:**
-    *   Click on "Use this template" on the GitHub repository page.
-    *   Create a new repository using this template.
+The template supports Python 3.11+. CI tests 3.11 and 3.13. Keep this policy,
+`.python-version`, and CI aligned when changing it.
 
-2.  **Clone the Repository:**
-    ```bash
-    git clone git@github.com:<gituser>/<new_repo_name>.git
-    ```
+## Quick start
 
-3.  **Update Project Metadata:**
-    *   Update `pyproject.toml` and, if necessary, add a `setup.py` with your project's details.
+Install [uv](https://docs.astral.sh/uv/), then run:
 
-4.  **Create and Activate a Virtual Environment:**
-    In Ubuntu or WSL:
-    ```bash
-    python -m venv .venv
-    source ./.venv/bin/activate
-    ```
-    In PowerShell (Windows):
-    ```bash
-    python -m venv .venv
-    .\.venv\Scripts\activate
-    ```
-    Ensure your virtual environment is activated before running the commands below.
-
-5.  **Install Required Dependencies:**
-    ```bash
-    python -m pip install --upgrade pip
-    python -m pip install -r requirements-dev.txt
-    ```
-
-6.  **Install Pre-commit Hooks:**
-    ```bash
-    pre-commit install --install-hooks
-    pre-commit install --hook-type commit-msg
-    pre-commit install --hook-type pre-push
-    ```
-
-    This installs Git hooks specified in `.pre-commit-config.yaml`:
-    *   On **commit**, fast checks (`black`, `isort`, `pylint` on staged files) are run.
-    *   On **push**, thorough checks (`pip-audit`) are run.
-
-7.  **Start Developing:**
-    *   Develop your Python package in the `src/` directory.
-    *   Write tests in the `tests/` directory.
-
-8.  **Running Tests Locally:**
-    ```bash
-    python -m pytest
-    ```
-
-9. **Run the tests locally with coverage:**
-    ```bash
-    python -m coverage run -m pytest
-    python -m coverage report
-    python -m coverage html
-    ```
-
-11. **Running Linters and Formatters Locally:**
-    *   Black and Isort:
-        ```bash
-        python -m black $(git ls-files "*.py")
-        python -m isort $(git ls-files "*.py")
-        ```
-    *   Full Codebase Pylint (run manually if desired):
-        ```bash
-        pylint --disable=R0801 $(git ls-files "*.py")
-        ```
-    *   Pip-Audit:
-        ```bash
-        pip-audit
-        ```
-
-12. **Ensure Code Quality Before Pushing:**
-    *   Ensure all tests pass and code adheres to style guidelines.
-    *   Fix any reported vulnerabilities found by `pip-audit`.
-    *   Run `pre-commit run --all-files` to ensure all existing files conform to the hooks.
-
-
-## Viewing Coverage Reports on GitHub Pages
-
-This repository publishes coverage reports using Coverage.py during GitHub Actions.
-The HTML report is uploaded as a Pages artifact and deployed with the `actions/deploy-pages` action.
-
-### Enable GitHub Pages
-
-1. Go to **Settings -> Pages**.
-2. Under **Build and deploy**, set **Source** to **GitHub Actions**.
-3. Push to `main` or `dev` and wait for the workflow to finish. The deploy job will output the site URL.
-
-### Coverage report URL
-
-Your coverage site will be available at:
-```
-https://eeca-nz.github.io/eeca-python-template/
-```
-
-### Note that:
-
-*   It may take a few minutes for GitHub Pages to become active.
-*   The coverage report is updated each time tests are run in GitHub Actions.
-
-## Notes on Pre-commit:
-*   **Configuration:** The `.pre-commit-config.yaml` file defines the pre-commit and pre-push hooks.
-*   **Hooks Behavior:**
-
-    *   Before running any checks, the hooks verify that the `.venv` virtual environment is activated. This ensures that the correct versions of tools and dependencies are used.
-    *   On commit:
-        *   Runs **Black**, **Isort**, and **Pylint (staged files only)**.
-    *   On push:
-        *   Runs **pip-audit** to check for security vulnerabilities before code is pushed.
-
-*   **Automatic Formatting and Checking:**
-    If any formatter modifies files or a check fails, the commit will be blocked. After fixing issues or adding modified files, commit again.
-
-*   **Conventional Commits:**
-    The pre-commit hooks will enforce commit message conventions. To find out more visit [www.conventionalcommits.org](https://www.conventionalcommits.org)
-
-    Common commit types:
-    - `feat`: new feature
-    - `fix`: bug fix
-    - `docs`: documentation only changes
-    - `style`: formatting only (no code changes)
-    - `refactor`: code change that neither fixes a bug nor adds a feature
-    - `test`: adding or fixing tests
-    - `chore`: maintenance tasks (build, deps, configs, etc.)
-
-    Example:  
-    - `feat(auth): add salesforce login`  
-    - `fix(python): correct null values in code`  
-
-*   **Semantic Versioning:**
-    This project follows Semantic Versioning (SemVer). Versions are expressed as:`MAJOR.MINOR.PATCH`.
-    When releases are created, the commit history is used to generate release notes and determine the next version automatically.
-    - `feat:` → MINOR bump (1.2.0 → 1.3.0)
-    - `fix:` → PATCH bump (1.2.0 → 1.2.1)
-    - `feat!:` or `BREAKING CHANGE:` → MAJOR bump (1.2.0 → 2.0.0)
-    - Other types → no release unless paired with `BREAKING CHANGE:`
-
-## Fixing Old Commits (Conventional Commits)
-If your commit messages don’t follow the convention and checks fail, you can rewrite them using interactive rebase.
-
-1.Configure VS Code as your Git editor *(Skip this if you already use another editor)*
 ```bash
-git config --global core.editor "code -w"
+uv sync --all-groups
+uv run pre-commit install --install-hooks --hook-type pre-commit
+uv run pre-commit install --hook-type commit-msg
+uv run pre-commit run --all-files
+uv run coverage run -m pytest
+uv run coverage report
+uv run pip-audit
 ```
-2.Abort any in-progress rebase (just in case)
-```bash
-git rebase --abort || true
-```
-3.Switch to your feature branch and update
-```bash
-git switch your-feature
-git fetch origin
-```
-4.Pick the correct base branch (choose ONE)
-```bash
-BASE=origin/main   # if your PR targets main
-# BASE=origin/dev  # if your PR targets dev
-# BASE=origin/test  # if your PR targets test
-```
-5.Find the fork point (where your branch split from base)
-```bash
-FORK_POINT=$(git merge-base "$BASE" HEAD)
-```
-6.Start interactive rebase
-```bash
-git rebase -i "$FORK_POINT"
-# change 'pick' to 'reword' for the commits to fix
-# enter proper Conventional Commit messages when 
-```
-7.Push rewritten history safely
-```bash
-git push --force-with-lease
-```
-Note: This rewrites commit history. Only do this on your own feature branches, never on shared `main`/`dev`.
 
-*   **Skipping Hooks (not recommended):**
-    ```bash
-    git commit --no-verify
-    ```
+Use `uv lock` after intentionally changing `pyproject.toml`, and commit
+`uv.lock`. CI uses `uv sync --locked` to enforce reproducibility.
 
-    Use only when necessary, e.g., for urgent hotfixes.
+## CI, Pages, and releases
+
+CI runs on pushes, pull requests to `main`, and manual dispatch. Pages deploys
+only after a successful push to `main`; enable **GitHub Actions** under
+repository **Settings → Pages**.
+
+This stub deliberately has no automatic release/publishing workflow. Add one
+only after its package index, version owner, branch rules, and release policy
+are known—this prevents tags, changelogs, and package metadata diverging.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
