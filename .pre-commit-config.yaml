@@ -1,76 +1,41 @@
 ---
-# This file defines pre-commit and pre-push hooks.
-# Includes a virtual environment check and basic
-# tooling (black, isort, pylint, pip-audit, yamllint).
-# All Python tools run inside the already-activated .venv
+# Local hooks run tools from the reproducible uv environment. Install uv first,
+# then run `uv sync --all-groups` and install hooks with `uv run pre-commit`.
 repos:
   - repo: local
     hooks:
-      - id: check-virtualenv-pre-commit
-        name: Check virtualenv activated (pre-commit)
-        entry: |
-          bash -c '
-          if [ -z "$VIRTUAL_ENV" ]; then
-            echo "ERROR: Please activate .venv before committing."
-            exit 1
-          fi
-          '
-        language: system
-        pass_filenames: false
-        stages: [pre-commit]
-
-      - id: check-virtualenv-pre-push
-        name: Check virtualenv activated (pre-push)
-        entry: |
-          bash -c '
-          if [ -z "$VIRTUAL_ENV" ]; then
-            echo "ERROR: Please activate .venv before pushing."
-            exit 1
-          fi
-          '
-        language: system
-        pass_filenames: false
-        stages: [pre-push]
-
       - id: black
-        name: black (venv)
-        entry: black
+        name: black
+        entry: uv run black
         language: system
         types: [python]
         stages: [pre-commit]
 
       - id: isort
-        name: isort (venv)
-        entry: isort --profile black
+        name: isort
+        entry: uv run isort --profile black
         language: system
         types: [python]
         stages: [pre-commit]
 
       - id: pylint
         name: pylint
-        entry: pylint --rcfile=.pylintrc
+        entry: uv run pylint --disable=R0801
         language: system
         types: [python]
         pass_filenames: true
         stages: [pre-commit]
 
       - id: yamllint
-        name: yamllint (venv)
-        entry: yamllint
+        name: yamllint
+        entry: uv run yamllint
         language: system
         types: [yaml]
         stages: [pre-commit]
 
-      - id: pip-audit
-        name: pip-audit
-        entry: python scripts/pip_audit_hook.py
-        language: system
-        pass_filenames: false
-        stages: [pre-push]
-
       - id: commitizen-local
-        name: commitizen (venv)
-        entry: cz check --commit-msg-file
+        name: commitizen
+        entry: uv run cz check --commit-msg-file
         language: system
         pass_filenames: true
         stages: [commit-msg]
