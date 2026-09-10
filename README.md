@@ -5,7 +5,7 @@
 
 A small, modern starting point for EECA Python packages: PEP 621 metadata, a
 `src/` layout, uv-locked dependencies, quality checks, dependency auditing,
-conventional-commit validation, and coverage publishing from `main`.
+and coverage publishing from `main`.
 
 ## Before using this template
 
